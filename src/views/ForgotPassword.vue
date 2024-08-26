@@ -1,17 +1,17 @@
 <template>
   <div class="about">
-    <RegistrationAuthentication msg="Welcome to ForgotPassword"/>
+    <RegAuth msg="Forgot Password" :isForgotPasswordPage="true" />
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import RegistrationAuthentication from '@/components/RegistrationAuthentication.vue'
+import RegAuth from '@/components/RegAuth.vue'
 
 export default {
   name: 'ForgotPassword',
   components: {
-    RegistrationAuthentication
+    RegAuth
   }
 }
 </script>

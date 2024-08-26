@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <RegAuth msg="Login" :isLoginPage="true" />
+    <RegAuth msg="Register" :isRegistrationPage="true" />
   </div>
 </template>
 
@@ -9,7 +9,7 @@
 import RegAuth from '@/components/RegAuth.vue'
 
 export default {
-  name: 'LoginPage',
+  name: 'RegistrationPage',
   components: {
     RegAuth
   }

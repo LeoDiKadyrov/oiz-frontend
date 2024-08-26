@@ -4,30 +4,42 @@
     <div class="container">
         <div class="logo">
             <!-- Placeholder for Logo -->
-            <div class="logo-icon"></div>
-            <h1 class="logo-text">Oiz</h1>
+             <RouterLink to="/" class="logo__router">
+                <div class="logo-icon"></div>
+                <h1 class="logo-text">Oiz</h1>
+             </RouterLink>
+            
         </div>
         
         <div class="login-box">
-            <p>Enter your details to get sign in to your account.</p>
+            <p v-if="isLoginPage">Enter your details to sign in to your account.</p>
+            <p v-if="isRegistrationPage">Fill in your details to create a new account.</p>
+            <p v-if="isForgotPasswordPage">Enter your email to reset your password.</p>
             
-            <form>
+            <form @submit.prevent="handleSubmit">
                 <div class="input-group">
                     <label for="email">Email</label>
-                    <input type="email" id="email" placeholder="e.g. username@kinety.com">
+                    <input type="email" id="email" placeholder="e.g. username@kinety.com" required>
                 </div>
                 
-                <div class="input-group">
+                <div class="input-group" v-if="!isForgotPasswordPage">
                     <label for="password">Password</label>
-                    <input type="password" id="password" placeholder="enter your password">
+                    <input type="password" id="password" placeholder="enter your password" v-if="!isForgotPasswordPage || isLoginPage" required>
                 </div>
+
+                <nav v-if="isLoginPage">
+                    <RouterLink to="/forgot-password" class="forgot-password">Forgot Password?</RouterLink>
+                </nav>
                 
-                <a href="#" class="forgot-password">Forgot Password?</a>
-                
-                <button type="submit" class="continue-btn">Continue</button>
+                <button type="submit" class="continue-btn">{{ buttonText }}</button>
             </form>
             
-            <p class="register">Don't have an account? <a href="#">Register Now</a></p>
+            <p class="register" v-if="!isRegistrationPage">
+                Don't have an account?
+                <nav>
+                    <RouterLink to="/register">Register Now</RouterLink>
+                </nav> 
+            </p>
         </div>
     </div>
   </div>
@@ -37,7 +49,39 @@
 export default {
   name: 'RegistrationAuthentication',
   props: {
-    msg: String
+    msg: String,
+    isLoginPage: {
+      type: Boolean,
+      default: false,
+    },
+    isRegistrationPage: {
+      type: Boolean,
+      default: false,
+    },
+    isForgotPasswordPage: {
+      type: Boolean,
+      default: false,
+    }
+  },
+  computed: {
+    buttonText() {
+      if (this.isLoginPage) return 'Continue';
+      if (this.isRegistrationPage) return 'Register';
+      if (this.isForgotPasswordPage) return 'Reset Password';
+      return 'Submit';
+    }
+  },
+  methods: {
+    handleSubmit() {
+      // Handle form submission logic here based on the page type
+      if (this.isLoginPage) {
+        // Login logic
+      } else if (this.isRegistrationPage) {
+        // Registration logic
+      } else if (this.isForgotPasswordPage) {
+        // Forgot password logic
+      }
+    }
   }
 }
 </script>
@@ -81,6 +125,12 @@ body, html {
 .logo-text {
     font-size: 24px;
     font-weight: bold;
+}
+
+.logo__router {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
 .login-box {
